@@ -1,0 +1,13 @@
+Given numbers n1 and n2 in binanry, return n1*n2 in binanry
+
+
+1. Create a empty list of numbers called nums 
+2. For each ith digit d in n2:
+	If d == 1: a. number t = n1 << i-1 
+		   b. add t to nums
+3. XOR all the number in the nums list to get a number n
+4. return n mod 100011011 by doing the following:
+	While n > 100011011:
+		a. 100011011 << (number of digits in n - 9)
+		b. n = n XOR 100011011
+		   
