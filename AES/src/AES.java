@@ -120,6 +120,8 @@ public class AES {
 			result[2][i] = xor(xor(multiply("0d",s0),multiply("09",s1)),xor(multiply("0e",s2),multiply("0b",s3)));
 			result[3][i] = xor(xor(multiply("0b",s0),multiply("0d",s1)),xor(multiply("09",s2),multiply("0e",s3)));
 		}
+//		System.out.println("after invMixColumns:");
+//		printState(result);
 		return result;
 	}
 
@@ -133,6 +135,8 @@ public class AES {
 				result[i][j] = padding(Integer.toHexString(invSBox[x][y]));
 			}
 		}
+//		System.out.println("after invSubBytes:");
+//		printState(result);
 		return result;
 	}
 
@@ -147,6 +151,8 @@ public class AES {
 			}
 			result[i] = row;
 		}
+//		System.out.println("after invShiftRows:");
+//		printState(result);
 		return result;
 	}
 	
@@ -176,6 +182,8 @@ public class AES {
 			result[2][i] = xor(xor(xor(multiply("02",s2),multiply("03",s3)),s0),s1);
 			result[3][i] = xor(xor(xor(multiply("02",s3),multiply("03",s0)),s2),s1);
 		}
+//		System.out.println("after mixColumns:");
+//		printState(result);
 		return result;
 	}
 
@@ -308,7 +316,6 @@ public class AES {
 			xtimeResult = xtime(xtimeResult);
 //			System.out.println("xtimeResult become " +  padding(Integer.toHexString(xtimeResult)));
 			if(d == 1){
-//				System.out.println("yes");
 				result = result ^ xtimeResult;
 			}
 			b = b >> 1;

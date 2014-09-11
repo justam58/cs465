@@ -5,15 +5,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-//		System.out.println("Please enter the plain text:");
-//		String plainText = sc.nextLine();
-//		System.out.println("Please enter the key:");
-//		String key = sc.nextLine();
+		System.out.println("Please enter the plain text:");
+		String plainText = sc.nextLine();
+		System.out.println("Please enter the key:");
+		String key = sc.nextLine();
 		
 
-		String plainText = "00112233445566778899aabbccddeeff";
-		// C1
-		String key = "000102030405060708090a0b0c0d0e0f"; // 69c4e0d86a7b0430d8cdb78070b4c55a
+//		String plainText = "00112233445566778899aabbccddeeff";
+//		// C1
+//		String key = "000102030405060708090a0b0c0d0e0f"; // 69c4e0d86a7b0430d8cdb78070b4c55a
 		
 //		// C2
 //		String key = "000102030405060708090a0b0c0d0e0f1011121314151617"; // dda97ca4864cdfe06eaf70a0ec0d7191
