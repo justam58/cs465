@@ -1,6 +1,5 @@
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -8,7 +7,7 @@ public class Main {
 	
 	private static SecureRandom random = new SecureRandom();
 	private static int times = 1000;
-	private static int length = 2;
+	private static int bitLength = 20;
 
 	public static void main(String[] args) throws Exception {
 //		preImage2();
@@ -20,60 +19,68 @@ public class Main {
 		int totalAttempts = 0;
 		for(int i = 0; i < times; i++){
 			String targetString = getRandomString();
-			long targetHash = hash(targetString, length);
+			String targetHash = hash(targetString);
 			int attempts = 0;
 			while(true){
 				attempts++;
 				String newString = getRandomString();
-				long newHash = hash(newString, length);
-				if(targetHash == newHash && !targetString.equals(newString)){
+				String newHash = hash(newString);
+				if(targetHash.equals(newHash) && !targetString.equals(newString)){
 					break;
 				}
 			}
-//			System.out.println((i+1) + ": " +attempts);
+			System.out.println((i+1) + ": " +attempts);
 			totalAttempts += attempts;
 		}
 		System.out.println("Average:" + (double)totalAttempts/times);
-		System.out.println("Theory:" + Math.pow(2, length*8));
+		System.out.println("Theory:" + Math.pow(2, bitLength));
 	}
 	
 	public static void collision() throws Exception {
 		System.out.println("Collision Attack");
 		int totalAttempts = 0;
 		for(int i = 0; i < times; i++){
-			HashMap<Long, String> hashStore = new HashMap<Long, String>();
-			int attempts = 0;
+			HashMap<String, String> hashStore = new HashMap<String, String>();
+			int attempts = 1;
 			while(true){
 				attempts++;
 				String newString = getRandomString();
-				long newHash = hash(newString, length);
-				String storedHash = hashStore.get(newHash);
-				if(storedHash != null && !storedHash.equals(newString)){
+				String newHash = hash(newString);
+				if(hashStore.containsKey(newHash) && !hashStore.get(newHash).equals(newString)){
 					break;
 				}
 				hashStore.put(newHash, newString);
 			}
-//			System.out.println((i+1) + ": " +attempts);
+			System.out.println((i+1) + ": " +attempts);
 			totalAttempts += attempts;
 		}
-		System.out.println("Average:" + totalAttempts/times);
-		System.out.println("Theory:" + Math.pow(2, length*4));
+		System.out.println("Average:" + (double)totalAttempts/times);
+		System.out.println("Theory:" + Math.pow(2, bitLength/2.0));
 	}
 	
-	public static long hash(String x, int length) throws Exception {
+	public static String hash(String x) throws Exception {
 		java.security.MessageDigest d = null;
 		d = java.security.MessageDigest.getInstance("SHA-1");
 		d.reset();
 		d.update(x.getBytes());
-		return byteArrayToLong(Arrays.copyOf(d.digest(), length));
+		return byteArrayToBitString(d.digest());
 	}
 	
-	public static long byteArrayToLong(byte[] bytes) {
-		long value = 0;
-		for (int i = 0; i < bytes.length; i++) {
-		   value = (value << 8) + (bytes[i] & 0xff);
+	public static String byteArrayToBitString(byte[] bytes) {
+		String result = "";
+		int i = 0;
+		int bitLengthTemp = bitLength;
+		while(bitLengthTemp > 8){
+			result += byteToBinaryString(bytes[i]);
+			bitLengthTemp -= 8;
+			i++;
 		}
-		return value;
+		result += byteToBinaryString(bytes[i]).substring(0, bitLengthTemp);;
+		return result;
+	}
+	
+	public static String byteToBinaryString(byte b){
+		return String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
 	}
 	
 	public static String getRandomString() {
