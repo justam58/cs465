@@ -6,11 +6,11 @@ import java.util.HashMap;
 public class Main {
 	
 	private static SecureRandom random = new SecureRandom();
-	private static int times = 1000;
-	private static int bitLength = 20;
+	private static int times = 100;
+	private static int bitLength = 22;
 
 	public static void main(String[] args) throws Exception {
-//		preImage2();
+		preImage2();
 		collision();
 	}
 	
@@ -29,7 +29,7 @@ public class Main {
 					break;
 				}
 			}
-			System.out.println((i+1) + ": " +attempts);
+//			System.out.println((i+1) + ": " +attempts);
 			totalAttempts += attempts;
 		}
 		System.out.println("Average:" + (double)totalAttempts/times);
@@ -41,7 +41,7 @@ public class Main {
 		int totalAttempts = 0;
 		for(int i = 0; i < times; i++){
 			HashMap<String, String> hashStore = new HashMap<String, String>();
-			int attempts = 1;
+			int attempts = -1;
 			while(true){
 				attempts++;
 				String newString = getRandomString();
@@ -51,7 +51,7 @@ public class Main {
 				}
 				hashStore.put(newHash, newString);
 			}
-			System.out.println((i+1) + ": " +attempts);
+//			System.out.println((i+1) + ": " +attempts);
 			totalAttempts += attempts;
 		}
 		System.out.println("Average:" + (double)totalAttempts/times);
