@@ -1,0 +1,2 @@
+Since hashing is related to block sizes and messages have padding added before hashed, there is a vulnerability where an attacker can add padding and their own message to the end of the original message. The attacker doesn't need to know the secret key in order to properly hash the MAC. A message digest through chunck n can be computed by knowing the message digest through chunk n-1 plus the value of chunck n of the padded message.
+
