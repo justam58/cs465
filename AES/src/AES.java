@@ -302,7 +302,6 @@ public class AES {
 	private String multiply(String x, String y) {
 		int a = Integer.decode("0x"+x);
 		int b = Integer.decode("0x"+y);
-		int i = 1;
 		int result = b % 2 == 0? 0 : a;
 		int xtimeResult = a;
 		b = b >> 1;
@@ -319,7 +318,6 @@ public class AES {
 				result = result ^ xtimeResult;
 			}
 			b = b >> 1;
-			i++;
 		}
 		return padding(Integer.toHexString(result));
 	}
@@ -402,19 +400,19 @@ public class AES {
 		return result;
 	}
 
-	private void printState(String[][] matrix) {
-		for(int i = 0; i < matrix.length; i++){
-			for(int j = 0; j < matrix.length; j++){
-				System.out.print(matrix[i][j]);
-				System.out.print(" ");
-			}	
-			System.out.println();
-		}
-	}
-	
-	private void printWords(String[] words) {
-		for(int i = 0; i < words.length; i++){
-			System.out.println("i=" + i + " " + words[i]);
-		}
-	}
+//	private void printState(String[][] matrix) {
+//		for(int i = 0; i < matrix.length; i++){
+//			for(int j = 0; j < matrix.length; j++){
+//				System.out.print(matrix[i][j]);
+//				System.out.print(" ");
+//			}	
+//			System.out.println();
+//		}
+//	}
+//	
+//	private void printWords(String[] words) {
+//		for(int i = 0; i < words.length; i++){
+//			System.out.println("i=" + i + " " + words[i]);
+//		}
+//	}
 }

@@ -41,6 +41,8 @@ public class Main {
 		System.out.println("Cipher: " + cipher);
 		String invCipher = aes.invCipher(cipher);
 		System.out.println("Inverse Cipher: " + invCipher);
+		
+		sc.close();
 	}
 
 }
