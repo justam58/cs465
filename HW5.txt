@@ -1,0 +1,19 @@
+1.Describe the Diffie-Hellman protocol.
+
+It is a method that allows two users to establish a secret key over an insecure medium without any prior secrets. Fisrt, two prime numbers g and p 
+are agreed upon as a standard where g must be a primitive root modulo p. Alice and Bob then each choose a large random number a and b, and each compute a number A and B that they send to each other (Alice computes A=g^a (mod p) and Bob computes B=g^b (mod p)). Once they recieve the number computed by the other, they can then compute a shared secret key k=g^(ab) (mod p).
+
+2.Show how Mallory can conduct a man-in-the-middle attack when Alice and Bob conduct the DH protocol from question #1.
+
+When Alice sends her public key to Bob, Mallory can intercept the key and send a forged message to Bob using Mallory's public key. Bob receives this key (Mallory's), and use it to encrypts his message. When Mallory receives this message, she can decrypt the message easily using her private key. She then encrypts the message using the public key from Alice, altering the message if she wants, and sends it to Alice. Alice will then think the message comes from Bob.
+
+3.What is the recommended key size for p?
+
+"p must be a minimum of 512 bits long." (Diffie-Hellman Key Agreement Method http://www.ietf.org/rfc/rfc2631.txt)
+Accoding to the lecture slides, p should be 2048 bits (Source: Cryptography Engineering, Ferguson et al.)(https://facwiki.cs.byu.edu/cs465/images/c/c6/DH.pdf)
+
+4.Why is the recommended size for p for DH so much larger than the recommended key size for AES?
+
+A 128-bit symmetric key is a bit more secure than a 2048-bit asymmetric key.
+For symmetric encryption, there's only one key and it's just any value of the right number of bits. This randomness of a symmetric key means it can be relatively short. The only way to break into a connection secured with a symmetric cipher is to try out all the keys. A 128-bit key means there are 340,282,366,920,938,463,463,374,607,431,768,211,456 possible keys to try. A 256-bit key has the square of that many keys to try: a huge number.
+Asymmetric cryptography works by having two different keys, one for encryption and one for decryption. Just as in the symmetric key case, attacks on say 2048-bit RSA are based on trying out all keys of a certain size, but unlike the symmetric key scheme not every 2048-bit number is an RSA key (because it has to be the product of two primes). So, although the key size is larger there are actually fewer possible RSA keys for any given number of bits that there are for the same symmetric key size. That's because there are only so many prime numbers of that size and below. The RSA scheme can only use pairs of prime numbers, whereas the symmetric schemes can use any number at all of the same size. (http://blog.cloudflare.com/why-are-some-keys-small)
