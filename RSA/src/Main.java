@@ -1,5 +1,6 @@
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Scanner;
 
 
 public class Main {
@@ -20,14 +21,29 @@ public class Main {
 			generatePQ();
 		}
 		
+		BigInteger d = extendedGCD(e,phiN).getFirst();
+		if(d.compareTo(BigInteger.ZERO) < 0){
+			d = phiN.subtract(d);
+		}
+		
 		System.out.println("p: " + p);
 		System.out.println("q: " + q);
 		System.out.println("n: " + n);
 		System.out.println("e: " + e);
-		
-		BigInteger d = extendedGCD(e,phiN).getFirst();
-		
 		System.out.println("d: " + d);
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Encrypt: ");
+		BigInteger m = sc.nextBigInteger();
+		BigInteger encrypted = modExp(m,e,n);
+		System.out.println("Encrypted: " + encrypted);
+		
+		System.out.println("Decrypt: ");
+		m = sc.nextBigInteger();
+		BigInteger decrypted = modExp(m,d,n);
+		System.out.println("Decrypted: " + decrypted);
+		
+		sc.close();
 
 	}
 	
@@ -58,7 +74,6 @@ public class Main {
 	}
 	
 	public static Pair<BigInteger,BigInteger> extendedGCD(BigInteger a, BigInteger b){
-		System.out.println("("+a+","+b+")");
 		if(b.compareTo(BigInteger.ZERO) == 0){
 			return new Pair<BigInteger,BigInteger>(BigInteger.ONE,BigInteger.ZERO);
 		}
@@ -67,7 +82,7 @@ public class Main {
 		Pair<BigInteger,BigInteger> pairST = extendedGCD(b,r);
 		BigInteger s = pairST.getFirst();
 		BigInteger t = pairST.getSecond();
-		return new Pair<BigInteger,BigInteger>(t,s.subtract(q).multiply(t));
+		return new Pair<BigInteger,BigInteger>(t,s.subtract(q.multiply(t)));
 	}
 	
 }
